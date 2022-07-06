@@ -9,6 +9,8 @@ urlpatterns = [
     path('run',views.HelloKenya.as_view(),name = 'HelloKenya'),
     path('me',views.Extractor.as_view(),name = 'extract-token'),
     path('api/safaris', views.safaris.as_view()),
+    path('api/tourguide/', views.TourguideList.as_view(),name='tourguide'),
+
 
 ]
 if settings.DEBUG:

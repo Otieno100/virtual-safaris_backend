@@ -22,3 +22,15 @@ class Safaris(models.Model):
       return self.name
 
 
+class Tourguide(models.Model):
+
+    name = models.CharField(max_length =30)
+    images = models.ImageField(upload_to="images/")
+
+    def __str__(self):
+        return self.name
+
+    def save_tourguide(self):
+        self.save()
+
+

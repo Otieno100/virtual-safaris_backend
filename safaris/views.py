@@ -7,8 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import  Safaris
-from .serializer import SafarisSerializer
+from .models import  Safaris, Tourguide
+from .serializer import SafarisSerializer, TourguideSerializer
 from rest_framework import status
 
 # Create your views here.
@@ -45,3 +45,9 @@ class safaris(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)    
+
+class TourguideList(APIView):
+    def get(self, request, format=None):
+        all_projects = Tourguide.objects.all()
+        serializers = TourguideSerializer(all_projects, many=True)
+        return Response(serializers.data)
