@@ -1,4 +1,6 @@
-#!/home/moringa/virtual-safaris/virtual/bin/python3
+#!/bin/sh
+'''exec' "/home/moringa/virtual Safaris/virtual-safaris_backend/virtual/bin/python" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
