@@ -22,3 +22,27 @@ class Safaris(models.Model):
       return self.name
 
 
+
+class Payment(models.Model):
+    amount = models.PositiveIntegerField(default=100)
+    phone_number =models.PositiveIntegerField(default=254799735661)
+
+    def __str__(self):
+        return f'{self.name} payment'
+
+    def save_payment(self):
+        self.save()
+
+        
+class Tourguide(models.Model):
+
+    name = models.CharField(max_length =30)
+    images = models.ImageField(upload_to="images/")
+
+    def __str__(self):
+        return self.name
+
+    def save_tourguide(self):
+        self.save()
+
+

@@ -9,7 +9,15 @@ urlpatterns = [
     path('run',views.HelloKenya.as_view(),name = 'HelloKenya'),
     path('me',views.Extractor.as_view(),name = 'extract-token'),
     path('api/safaris', views.safaris.as_view()),
+    path('access/token', views.getAccessToken, name='get_mpesa_access_token'),
+    path('online/lipa/<phonenumber>/<amount>/', views.lipa_na_mpesa_online, name='lipa_na_mpesa'),
+    path('api/tourguide/', views.TourguideList.as_view(),name='tourguide'),
+
 
 ]
+
+
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
