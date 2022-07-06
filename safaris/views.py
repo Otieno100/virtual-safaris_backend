@@ -8,8 +8,8 @@ from django.http import HttpResponse
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import  Safaris
-from .serializer import SafarisSerializer
+from .models import  Safaris, Tourguide
+from .serializer import SafarisSerializer, TourguideSerializer
 from rest_framework import status
 
 
@@ -87,3 +87,9 @@ def lipa_na_mpesa_online(request, phonenumber, amount):
     }
     response = requests.post(api_url, json=request, headers=headers)
     return HttpResponse('success')
+    
+class TourguideList(APIView):
+    def get(self, request, format=None):
+        all_projects = Tourguide.objects.all()
+        serializers = TourguideSerializer(all_projects, many=True)
+        return Response(serializers.data)

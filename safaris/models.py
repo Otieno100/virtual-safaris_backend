@@ -32,3 +32,17 @@ class Payment(models.Model):
 
     def save_payment(self):
         self.save()
+
+        
+class Tourguide(models.Model):
+
+    name = models.CharField(max_length =30)
+    images = models.ImageField(upload_to="images/")
+
+    def __str__(self):
+        return self.name
+
+    def save_tourguide(self):
+        self.save()
+
+
