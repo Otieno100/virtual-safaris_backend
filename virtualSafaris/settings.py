@@ -41,14 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'safaris',
     'rest_framework',
-<<<<<<< HEAD
     'rest_framework_simplejwt',
-    'cloudinary'
-=======
+    'cloudinary',
     'rest_framework_simplejwt.token_blacklist',
     'crispy_forms',
     'bootstrap4',
->>>>>>> f4622ffa1b2d2c953df550eeffd57f7747a459f3
 ]
 REST_FRAMEWORK = {
     
@@ -170,20 +167,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-<<<<<<< HEAD
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-=======
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
->>>>>>> f4622ffa1b2d2c953df550eeffd57f7747a459f3
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-<<<<<<< HEAD
 
 REST_FRAMEWORK ={
     'DEFAULT_AUTHENTICATION_CLASSES':[
@@ -193,11 +186,9 @@ REST_FRAMEWORK ={
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-=======
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL='login'
 
 LOGOUT_REDIRECT_URL = 'login'
->>>>>>> f4622ffa1b2d2c953df550eeffd57f7747a459f3
