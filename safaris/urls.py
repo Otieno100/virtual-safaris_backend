@@ -13,6 +13,12 @@ urlpatterns = [
     path('online/lipa/<phonenumber>/<amount>/', views.lipa_na_mpesa_online, name='lipa_na_mpesa'),
     path('api/tourguide/', views.TourguideList.as_view(),name='tourguide'),
 
+    path('', views.home, name='home'),
+    path('register/', views.register, name='register'),
+    path('profile/', views.profile, name='profile'),
+    path('api/profile', views.ProfileList.as_view()),
+
+    path('account/', include('django.contrib.auth.urls')),
 
 ]
 
