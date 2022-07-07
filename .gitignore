@@ -2,3 +2,7 @@ __pycache__/
 virtual/
 .pyc
 .pyc/
+virtual/
+virtual/
+db.sqlite3
+
