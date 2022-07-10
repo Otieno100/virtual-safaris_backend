@@ -11,7 +11,15 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-import os
+import environ
+import cloudinary.uploader
+import cloudinary
+from django.conf import settings
+import cloudinary.api
+import django_heroku
+import dj_database_url
+from decouple import config,Csv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 from datetime import timedelta
@@ -40,19 +48,34 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'safaris',
+    'drf_yasg',
+    'rest_framework_swagger',
     'rest_framework',
     'rest_framework_simplejwt',
     'cloudinary',
     'rest_framework_simplejwt.token_blacklist',
     'crispy_forms',
+    'phonenumbers',
     'bootstrap4',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'django.contrib.sites',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+   
 ]
 REST_FRAMEWORK = {
     
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        ),
     
 }
 
@@ -88,11 +111,15 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+SITE_ID = 1
+
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -119,6 +146,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'virtualSafaris.wsgi.application'
 
+CORS_ALLOWED_ORIGINS = [
+
+    "http://127.0.0.1:8000",
+]
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+# CORS_ALLOWED_ORIGIN_REGEXES: Sequence[str | Pattern[str]]
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -127,8 +167,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'safaris',
-        'USER': 'moringa',
-    'PASSWORD':'Access',
+        'USER': 'albrighthuman',
+    'PASSWORD':'bright',
     }
 }
 
@@ -178,17 +218,27 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK ={
-    'DEFAULT_AUTHENTICATION_CLASSES':[
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-}
+#Email notification
+EMAIL_USE_TLS = True  
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_HOST_USER = 'sungutialbright@gmail.com'  
+EMAIL_HOST_PASSWORD = 'travisasutsa01'  
+EMAIL_PORT = 587  
+
+AUTH_USER_MODEL = 'safaris.User'
+
+User = settings.AUTH_USER_MODEL
+
+ACCOUNT_UNIQUE_EMAIL = True
+
+cloudinary.config( 
+  cloud_name = "albrighthuman", 
+  api_key = "855458957337641", 
+  api_secret = "L2sDfraxDlrpo2ieBM88pttDwbY" 
+)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL='login'
-
-LOGOUT_REDIRECT_URL = 'login'
