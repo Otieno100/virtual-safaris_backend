@@ -1,6 +1,8 @@
-<<<<<<< HEAD
-virtual
-=======
+__pycache__/
+virtual/
+.pyc
+.pyc/
+virtual/
 virtual/
 db.sqlite3
->>>>>>> f4622ffa1b2d2c953df550eeffd57f7747a459f3
+
