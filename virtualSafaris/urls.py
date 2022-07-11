@@ -10,7 +10,6 @@ urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('accounts/', include('allauth.urls')),
-    path('api/v1/', include('mpesa_api.urls')),
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
    
 ]

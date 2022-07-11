@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
@@ -13,6 +14,8 @@ from virtualSafaris.settings import AUTH_USER_MODEL
 from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
+
+
 class User(AbstractUser):
     is_tourist = models.BooleanField(default=False)
     is_tourguide = models.BooleanField(default=False)
@@ -29,7 +32,7 @@ class User(AbstractUser):
     def delete_user(self):
         self.delete()
 
-      
+
 #   def __str__(self):
 #         return self.username
 
@@ -37,7 +40,8 @@ class User(AbstractUser):
 @receiver(post_save, sender=AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
-        Token.objects.create(user=instance)  
+        Token.objects.create(user=instance)
+
 
 class Safaris(models.Model):
     """
@@ -48,17 +52,16 @@ class Safaris(models.Model):
     location = models.CharField(max_length=400)
     pub_date = models.DateTimeField(auto_now_add=True)
     image = CloudinaryField('safais-image', null=True)
-    video = models.FileField(upload_to ="video/%y")
-    
+    video = CloudinaryField('safaris-video', null=True, default=None)
 
     def __str__(self):
-      return self.name
-
+        return self.name
 
 
 class Payment(models.Model):
     amount = models.PositiveIntegerField(default=100)
-    phone_number =models.PositiveIntegerField(default=254799735661)
+    contact = PhoneNumberField(
+        null=False, blank=False, unique=True, default=254799735661)
 
     def __str__(self):
         return f'{self.name} payment'
@@ -66,18 +69,20 @@ class Payment(models.Model):
     def save_payment(self):
         self.save()
 
-        
+
 class Tourguide(models.Model):
 
     user = models.OneToOneField(
-        User, related_name='tourguide', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
-    contact = models.IntegerField()
-    location = models.IntegerField(blank=True)
-    address = models.CharField(max_length=255)
-    company_bio = models.CharField(max_length=255)
-    company_pic = CloudinaryField('image')
+        User, related_name='tourguide', on_delete=models.CASCADE, default='')
+    name = models.CharField(max_length=255, default='')
+    email = models.CharField(max_length=255, default='')
+    contact = PhoneNumberField(
+        null=False, blank=False, unique=True, default='')
+    location = models.IntegerField(blank=True, default='')
+    address = models.CharField(max_length=255, default='')
+    company_bio = models.CharField(max_length=255, default='')
+    company_pic = CloudinaryField(
+        'image', default='https://res.cloudinary.com/albrighthuman/image/upload/v1654439561/cld-sample-2.jpg')
 
     def save_tourguide(self):
         self.save()
@@ -94,29 +99,32 @@ class Tourguide(models.Model):
         return self.name
 
 
-
 class Profile(models.Model):
-    
+
     id = models.IntegerField(User, primary_key=True)
-    full_name = models.CharField(max_length=255)
-    contact = PhoneNumberField(null=False, blank=False, unique=True)
-    email = models.CharField(max_length=255)
-    bio = models.CharField(max_length=255)
-    profile_image = CloudinaryField('image')
-    bio = models.TextField(max_length=500, default="My Bio", blank=True)
-    address = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=255, default='')
+    contact = PhoneNumberField(
+        null=False, blank=False, unique=True, default=254799735661)
+    email = models.CharField(max_length=255, default='')
+    bio = models.CharField(max_length=255, default='')
+    profile_image = CloudinaryField(
+        'image', default='https://res.cloudinary.com/albrighthuman/image/upload/v1654536946/hjiaxew1u4pydlw3wljo.jpg')
+    bio = models.TextField(max_length=500, default='', blank=True)
+    address = models.CharField(max_length=100, default='')
+
 
 class Tourist(models.Model):
     user = models.OneToOneField(
-        User, related_name='tourist', on_delete=models.CASCADE)
-    profile_photo = CloudinaryField('image',  blank=True)
-    bio = models.TextField(blank=True)
-    location = models.CharField(max_length=100,  blank=True)
-    contact = models.CharField(max_length=30,  blank=True)
-    name = models.IntegerField(blank=False)
-    phone_no = models.CharField(max_length=50, blank=False)
-    email = models.CharField(max_length=50, blank=True)
-    password = models.CharField(max_length=50, blank=False)
+        User, related_name='tourist', on_delete=models.CASCADE, default='')
+    profile_photo = CloudinaryField(
+        'image',  blank=True, default='https://res.cloudinary.com/albrighthuman/image/upload/v1654536946/hjiaxew1u4pydlw3wljo.jpg')
+    bio = models.TextField(blank=True, default='')
+    location = models.CharField(max_length=100,  blank=True, default='')
+    contact = PhoneNumberField(
+        null=False, blank=False, unique=True, default=254799735661)
+    name = models.IntegerField(blank=False, default='')
+    email = models.CharField(max_length=50, blank=True, default='')
+    password = models.CharField(max_length=50, blank=False, default='')
 
     def __str__(self):
         return self.name
@@ -130,4 +138,3 @@ class Tourist(models.Model):
     @classmethod
     def update_tourist(self):
         self.update()
-

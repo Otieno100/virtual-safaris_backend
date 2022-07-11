@@ -38,18 +38,17 @@ router.register('Tourist', views.TouristViewSet)
 router.register('UpdateUserProfile', views. UpdateUserProfileViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls')),
+    # path('', include(router.urls)),
+    # path('api/', include(router.urls)),
+    # path('api-auth/', include('rest_framework.urls')),
     path('tourist/', views.Tourist, name='Tourist'),
     path('user/', views.User, name='User'),
     path('profile/', views.Profile, name='UpdateUserProfile'),
     path('activate/(<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',  
         activate, name='activate'),
-
-    # path('login',jwt_views.TokenObtainPairView.as_view(),name = 'login'),
-    # path('run',views.HelloKenya.as_view(),name = 'HelloKenya'),
-    # path('me',views.Extractor.as_view(),name = 'extract-token'),
+    path('login',jwt_views.TokenObtainPairView.as_view(),name = 'login'),
+    path('run',views.HelloKenya.as_view(),name = 'HelloKenya'),
+    path('me',views.Extractor.as_view(),name = 'extract-token'),
     path('api/safaris', views.safaris.as_view()),
     path('access/token', views.getAccessToken, name='get_mpesa_access_token'),
     path('online/lipa/<phonenumber>/<amount>/', views.lipa_na_mpesa_online, name='lipa_na_mpesa'),
