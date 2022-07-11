@@ -44,15 +44,15 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 class Safaris(models.Model):
-    """
-    A class thaat determines how photos will be saved into the database
-    """
+   
     name = models.CharField(max_length=344)
     description = models.TextField()
     location = models.CharField(max_length=400)
     pub_date = models.DateTimeField(auto_now_add=True)
     image = CloudinaryField('safais-image', null=True)
     video = CloudinaryField('safaris-video', null=True, default=None)
+    
+    
 
     def __str__(self):
         return self.name
@@ -60,7 +60,7 @@ class Safaris(models.Model):
 
 class Payment(models.Model):
     amount = models.PositiveIntegerField(default=100)
-    contact = PhoneNumberField(
+    contact = models.PositiveIntegerField(
         null=False, blank=False, unique=True, default=254799735661)
 
     def __str__(self):
@@ -76,13 +76,15 @@ class Tourguide(models.Model):
         User, related_name='tourguide', on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=255, default='')
     email = models.CharField(max_length=255, default='')
-    contact = PhoneNumberField(
-        null=False, blank=False, unique=True, default='')
+    contact = models.PositiveIntegerField(
+        null=False, blank=False, unique=True, default=254799735661)
     location = models.IntegerField(blank=True, default='')
     address = models.CharField(max_length=255, default='')
     company_bio = models.CharField(max_length=255, default='')
     company_pic = CloudinaryField(
         'image', default='https://res.cloudinary.com/albrighthuman/image/upload/v1654439561/cld-sample-2.jpg')
+   
+
 
     def save_tourguide(self):
         self.save()
@@ -103,7 +105,7 @@ class Profile(models.Model):
 
     id = models.IntegerField(User, primary_key=True)
     full_name = models.CharField(max_length=255, default='')
-    contact = PhoneNumberField(
+    contact = models.PositiveIntegerField(
         null=False, blank=False, unique=True, default=254799735661)
     email = models.CharField(max_length=255, default='')
     bio = models.CharField(max_length=255, default='')
@@ -120,11 +122,12 @@ class Tourist(models.Model):
         'image',  blank=True, default='https://res.cloudinary.com/albrighthuman/image/upload/v1654536946/hjiaxew1u4pydlw3wljo.jpg')
     bio = models.TextField(blank=True, default='')
     location = models.CharField(max_length=100,  blank=True, default='')
-    contact = PhoneNumberField(
+    contact = models.PositiveIntegerField(
         null=False, blank=False, unique=True, default=254799735661)
     name = models.IntegerField(blank=False, default='')
     email = models.CharField(max_length=50, blank=True, default='')
     password = models.CharField(max_length=50, blank=False, default='')
+   
 
     def __str__(self):
         return self.name

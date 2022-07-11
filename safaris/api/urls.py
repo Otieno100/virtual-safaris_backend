@@ -15,7 +15,6 @@ urlpatterns =[
     path('register/tourist/', TouristSignupView.as_view()),
     path('register/tourguide/', TourguideSignupView.as_view()),
     path('login/', CustomAuthToken.as_view(), name="auth_token"),
-    path('logout/', LogoutView.as_view(), name="logout_view"),
     path('tourist/dashboard/', TouristOnlyView.as_view(), name="tourist_dashboard"),
     path('employer/dashboard/', TourguideOnlyView.as_view(), name="tourguide_dashboard"),
    
