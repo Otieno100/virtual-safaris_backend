@@ -1,14 +1,13 @@
 from django.contrib import admin
-<<<<<<< HEAD
-from .models import Safaris, Tourguide
-
+from .models import User, Tourist, Tourguide, Safaris
+from django.contrib.auth.models import Group
+from . import models
 
 # Register your models here.
+
+admin.site.register(User)
+admin.site.register(Tourist)
 admin.site.register(Safaris)
 admin.site.register(Tourguide)
+admin.site.register(models.Profile)
 
-=======
-from .models import Profile
-
-admin.site.register(Profile)
->>>>>>> f4622ffa1b2d2c953df550eeffd57f7747a459f3
